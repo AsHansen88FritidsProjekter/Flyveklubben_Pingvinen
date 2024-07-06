@@ -1,12 +1,14 @@
-package Controller;
+package com.example.backend.Controller;
 
-import Service.ImageService;
+import com.example.backend.Service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.List;
+
 import org.springframework.http.MediaType;
 
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
@@ -14,7 +16,9 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
     @RestController
     @RequestMapping("/image")
     @RequiredArgsConstructor
+    @CrossOrigin("http://localhost:63342")
     public class ImageController {
+
 
         private final ImageService imageService;
 
@@ -31,6 +35,14 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
                     .contentType(MediaType.valueOf(IMAGE_PNG_VALUE))
                     .body(imageData);
         }
+
+        @GetMapping("/images")
+        public ResponseEntity<List<String>> listImages() {
+            List<String> imageFiles = imageService.listImages();
+            return ResponseEntity.status(HttpStatus.OK).body(imageFiles);
+        }
     }
+
+
 
 

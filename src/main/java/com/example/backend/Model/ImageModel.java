@@ -1,19 +1,18 @@
-package Model;
+package com.example.backend.Model;
+
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 
 @Entity
-@Table(name = "Images")
-
+@Table(name = "images")
+@Builder
 public class ImageModel {
 
     @Id

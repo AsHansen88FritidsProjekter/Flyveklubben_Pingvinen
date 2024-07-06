@@ -1,13 +1,15 @@
-package Service;
+package com.example.backend.Service;
 
-import Model.ImageModel;
-import Repository.ImageRepo;
-import Util.ImageUtil;
-import Exception.ImageServiceException;
+import com.example.backend.Util.ImageUtil;
+import com.example.backend.Model.ImageModel;
+import com.example.backend.Repository.ImageRepo;
+import com.example.backend.Exception.ImageServiceException;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,11 @@ public class ImageService {
             throw new ImageServiceException("Image not found", null, "Image name: " + imageName);
         }
     }
+
+    public List<String> listImages() {
+        return imageRepository.findAll()
+                .stream()
+                .map(ImageModel::getName)
+                .collect(Collectors.toList());
+    }
 }
-
-

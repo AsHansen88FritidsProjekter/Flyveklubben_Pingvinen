@@ -1,4 +1,4 @@
-package Util;
+package com.example.backend.Util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
