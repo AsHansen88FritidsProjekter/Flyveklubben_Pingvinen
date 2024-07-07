@@ -48,7 +48,10 @@ public class UserModel {
     private Set<RoleModel> roles = new HashSet<>();
 
 
-    public UserModel(String username, String email, String encode) {
+    public UserModel(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 }
 

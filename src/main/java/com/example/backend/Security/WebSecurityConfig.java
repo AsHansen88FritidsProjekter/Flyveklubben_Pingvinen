@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.backend.Security.Jwt.AuthEntryPointJwt;
+import com.example.backend.Security.Jwt.AuthTokenFilter;
+import com.example.backend.Service.UserDetailsServiceImpl;
 
 @Configuration
 //@EnableWebSecurity
@@ -24,6 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //(securedEnabled = true,
 //jsr250Enabled = true,
 //prePostEnabled = true) // by default
+
 public class WebSecurityConfig {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
