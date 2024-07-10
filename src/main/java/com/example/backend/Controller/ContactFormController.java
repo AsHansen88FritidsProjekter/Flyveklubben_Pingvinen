@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,4 +22,11 @@ public class ContactFormController {
         contactRepository.save(contact);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Contact saved successfully"));
     }
+
+    @GetMapping("/contactinfo")
+    public ResponseEntity<List<ContactFormModel>> getAllContacts() {
+        List<ContactFormModel> contacts = contactRepository.findAll();
+        return ResponseEntity.ok(contacts);
+    }
 }
+
