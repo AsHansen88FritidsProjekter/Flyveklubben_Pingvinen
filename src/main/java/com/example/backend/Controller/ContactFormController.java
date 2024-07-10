@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/contact")
@@ -15,8 +16,8 @@ public class ContactFormController {
     private ContactFormRepo contactRepository;
 
     @PostMapping("/contacts")
-    public ResponseEntity<String> submitContact(@RequestBody ContactFormModel contact) {
+    public ResponseEntity<Map<String, String>> submitContact(@RequestBody ContactFormModel contact) {
         contactRepository.save(contact);
-        return new ResponseEntity<>("Contact saved successfully", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Contact saved successfully"));
     }
 }

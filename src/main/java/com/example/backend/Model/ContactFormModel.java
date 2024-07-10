@@ -16,8 +16,8 @@ public class ContactFormModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String Lname;
+    private String firstname;
+    private String lastname;
     private String email;
     private String message;
 
