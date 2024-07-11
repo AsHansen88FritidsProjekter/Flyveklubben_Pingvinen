@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
     @RestController
-    @RequestMapping("/image")
+    @RequestMapping("/api/image")
     @RequiredArgsConstructor
     @CrossOrigin("http://localhost:63342")
     public class ImageController {
@@ -41,7 +41,19 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
             List<String> imageFiles = imageService.listImages();
             return ResponseEntity.status(HttpStatus.OK).body(imageFiles);
         }
+
+        @DeleteMapping("/{fileName}")
+        public ResponseEntity<?> deleteImage(@PathVariable String fileName) {
+            boolean isDeleted = imageService.deleteImage(fileName);
+            if (isDeleted) {
+                return ResponseEntity.status(HttpStatus.OK).body("Image deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found");
+            }
+        }
     }
+
+
 
 
 

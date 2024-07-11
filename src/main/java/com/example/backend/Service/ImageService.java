@@ -50,4 +50,16 @@ public class ImageService {
                 .map(ImageModel::getName)
                 .collect(Collectors.toList());
     }
+
+    public boolean deleteImage(String fileName) {
+        Optional<ImageModel> image = imageRepository.findByName(fileName);
+        if (image.isPresent()) {
+            imageRepository.delete(image.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
+
