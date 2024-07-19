@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -30,10 +33,16 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
         @GetMapping("/{fileName}")
         public ResponseEntity<?> downloadImage(@PathVariable String fileName) {
-            byte[] imageData = imageService.downloadImage(fileName);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .contentType(MediaType.valueOf(IMAGE_PNG_VALUE))
-                    .body(imageData);
+            try {
+                // Decode the URL-encoded filename
+                String decodedFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8.toString());
+                byte[] imageData = imageService.downloadImage(decodedFileName);
+                return ResponseEntity.status(HttpStatus.OK)
+                        .contentType(MediaType.IMAGE_PNG) // Set the appropriate media type
+                        .body(imageData);
+            } catch (UnsupportedEncodingException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file name");
+            }
         }
 
         @GetMapping("/images")
@@ -44,14 +53,21 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
         @DeleteMapping("/{fileName}")
         public ResponseEntity<?> deleteImage(@PathVariable String fileName) {
-            boolean isDeleted = imageService.deleteImage(fileName);
-            if (isDeleted) {
-                return ResponseEntity.status(HttpStatus.OK).body("Image deleted successfully");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found");
+            try {
+                // Decode the URL-encoded filename
+                String decodedFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8.toString());
+                boolean isDeleted = imageService.deleteImage(decodedFileName);
+                if (isDeleted) {
+                    return ResponseEntity.status(HttpStatus.OK).body("Image deleted successfully");
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found");
+                }
+            } catch (UnsupportedEncodingException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file name");
             }
         }
     }
+
 
 
 
