@@ -9,4 +9,5 @@ public interface NewsService {
     NewsModel findById(Long id);
     NewsModel save(NewsModel post);
     void deleteById(Long id);
+    NewsModel update(Long id, NewsModel post); // Add this line
 }

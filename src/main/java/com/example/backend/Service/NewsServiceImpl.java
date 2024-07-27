@@ -32,4 +32,14 @@ public class NewsServiceImpl implements NewsService {
     public void deleteById(Long id) {
         newsRepository.deleteById(id);
     }
+
+    @Override
+    public NewsModel update(Long id, NewsModel post) {
+        return newsRepository.findById(id).map(existingPost -> {
+            existingPost.setTitle(post.getTitle());
+            existingPost.setContent(post.getContent());
+            // Update other fields as necessary
+            return newsRepository.save(existingPost);
+        }).orElse(null);
+    }
 }

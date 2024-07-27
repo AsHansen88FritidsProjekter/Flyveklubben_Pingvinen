@@ -14,7 +14,6 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-
     @GetMapping
     public List<NewsModel> findAll() {
         return newsService.findAll();
@@ -30,9 +29,13 @@ public class NewsController {
         return newsService.save(post);
     }
 
+    @PutMapping("/{id}")
+    public NewsModel update(@PathVariable Long id, @RequestBody NewsModel post) {
+        return newsService.update(id, post);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         newsService.deleteById(id);
     }
-
 }
